@@ -28,8 +28,8 @@
 
 <script>
 import axios from "axios";
+import VueRouter from 'vue-router'
 
-const api = "http://localhost:6590";
 
 export default {
   props: ["isLoginScreen"],
@@ -37,17 +37,21 @@ export default {
   data: () => ({
     username: "",
     email: "",
-    password: ""
+    password: "",
   }),
   methods: {
     submitForm() {
       let { username, email, password } = this;
 
-      if (this.isLoginScreen) {
-        console.log({ username, password });
-        axios.post();
-      } else {
-        console.log({ email, username, password });
+      const api = "http://localhost:6590";
+
+      if(username == "" || email == "" || password == ""){
+        this.$router.go();
+      }else{
+        const routeApi =  this.isLoginScreen ? `${api}/authenticate` : `${api}/create-user`;
+        axios.post(routeApi,{email,username,password})
+          .then(resp => console.log(resp.data))
+          .catch(err => console.log(`Deu erro: ${err}`))
       }
     }
   },

@@ -1,6 +1,7 @@
 const express = require('express')
 const bodyParser = require('body-parser')
 const morgan =  require("morgan")
+const cors = require('cors')
 const config = require('./config/index')
 
 const mongoose = require('mongoose')
@@ -16,6 +17,22 @@ app.set('superNode-auth',config.configName)
 app.use(morgan('dev'))
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: false}))
+app.use(cors())
+
+
+app.options("*", cors())
+
+app.use(function(req, res, next) {
+	res.header("Access-Control-Allow-Origin", "*");
+	res.header(
+		"Access-Control-Allow-Headers",
+		"Origin, X-Requested-With, Content-Type, Authorization"
+	);
+	res.header("Content-Type", "application/json");
+	res.header("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
+	res.header("Access-Control-Allow-Credentials", "true");
+	next();
+}); 
 
 mongoose.connect(config.database)
 
