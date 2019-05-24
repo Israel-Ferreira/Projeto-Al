@@ -4,8 +4,14 @@ Projeto para concorrer a uma vaga de estágio na automalógica
 
 ## Como Rodar 
 
-Iniciando o servidor backend
-`cd al-backend
-npm install
-npm start
-`
+### Iniciando o Backend
+
+Mude para a pasta onde está o backend, com nome de `al-backend`
+`cd al-backend`
+
+Depois, instale as dependências com o seguinte comando:
+`npm install`
+
+A proxima etapa é iniciar o servidor
+`npm start`
+
