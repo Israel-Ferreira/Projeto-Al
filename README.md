@@ -1,5 +1,5 @@
 # Projeto-Al
-Projeto para concorrer a uma vaga de estágio na automalógica
+Projeto para concorrer a uma vaga de estágio na Automalógica
 
 
 ## Como Rodar 
