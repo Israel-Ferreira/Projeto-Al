@@ -17,10 +17,11 @@ class UserService {
 
     getUserByName(user){
         axios.defaults.headers.common['x-access-token'] = localStorage.getItem('jwtToken')
-        return axios.get(`${this.url}/api/v1/user/me`)
+        return axios.get(`${this.url}/api/v1/user/me/${user.username}`)
     }
+
 
 }
 
 
-export default new UserService()
+export default UserService;

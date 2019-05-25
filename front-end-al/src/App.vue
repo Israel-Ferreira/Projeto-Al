@@ -2,7 +2,7 @@
   <div id="app">
     <md-app md-mode="reveal" style="min-height: 100vh;">
       <md-app-toolbar class="md-accent">
-        <md-button v-if="!isLoginScreen" class="md-icon-button" @click="menuVisible = !menuVisible">
+        <md-button class="md-icon-button" @click="menuVisible = !menuVisible">
           <md-icon>menu</md-icon>
         </md-button>
         <span class="md-title">SocialSpace</span>
@@ -40,8 +40,6 @@
   </div>
 </template>
 
-<style lang="scss">
-</style>
 
 <script>
 export default {

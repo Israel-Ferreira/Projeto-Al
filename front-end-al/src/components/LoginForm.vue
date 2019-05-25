@@ -13,18 +13,25 @@
         </md-field>
 
         <md-field>
-            <label>Senha</label>
-            <md-input type="password" v-model="password"></md-input>
-            <span class="md-helper-text">Helper text</span>
+          <label>Senha</label>
+          <md-input type="password" v-model="password"></md-input>
+          <span class="md-helper-text">Helper text</span>
         </md-field>
-        <md-button type="submit" class="md-raised md-primary">Create user</md-button>
+        <md-button type="submit" class="md-raised md-primary">Login</md-button>
+        <md-button v-if="isLoginScreen" type="button" class="md-raised md-accent">
+          <router-link to="/signup">
+            Criar uma conta
+          </router-link>
+        </md-button>
     </form>
   </div>
 </template>
 
 <script>
-import axios from "axios";
+import UserService from '../services/UserService'
 import VueRouter from 'vue-router'
+
+const userService = new UserService('http://localhost:6590');
 
 
 export default {
@@ -38,17 +45,43 @@ export default {
   methods: {
     submitForm() {
       let { username, email, password } = this;
-
-      const api = "http://localhost:6590";
-
       if(username == "" || email == "" || password == ""){
         this.$router.go();
       }else{
-        const routeApi =  this.isLoginScreen ? `${api}/authenticate` : `${api}/create-user`;
-        axios.post(routeApi,{email,username,password})
-          .then(resp => console.log(resp.data))
-          .catch(err => console.log(`Deu erro: ${err}`))
+        const obj = {username,email, password}
+
+        if(this.isLoginScreen){
+          this.login(obj)
+        }else{
+          this.signUp(obj)
+        }
       }
+    },
+
+    login(user){
+      userService.loginUser(user)
+        .then(resp => {
+          console.log(resp.data)
+          localStorage.setItem('')
+        })
+        .catch(err => {
+          console.log(`Deu erro: ${err}`)
+          alert("Erro");
+          this.$router.go();
+        })
+    },
+
+    signUp(user){
+      userService.createUser(user)
+        .then(resp => {
+          console.log(resp)
+          this.$router.push('auth')
+          alert('Conta Criada com sucesso')
+        })
+        .catch(err => {
+          console.log(err)
+          this.$router.go()
+        })
     }
   },
   computed: {
