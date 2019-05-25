@@ -12,12 +12,10 @@ userRouter.use((req, res, next) => {
 	if (token) {
 		jwt.verify(token, '123456', (err, decoded) => {
 			if (err) {
-				return res
-				    .status(404)
-					.json({
-						success: false,
-						message: "Falha ao tentar autenticar o token"
-					});
+				return res.status(404).json({
+					success: false,
+					message: "Falha ao tentar autenticar o token"
+				});
 			} else {
 				req.decoded = decoded;
 				next();

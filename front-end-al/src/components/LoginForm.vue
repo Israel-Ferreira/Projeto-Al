@@ -22,10 +22,6 @@
   </div>
 </template>
 
-
-
-
-
 <script>
 import axios from "axios";
 import VueRouter from 'vue-router'
