@@ -18,8 +18,10 @@
           </md-list-item>
 
           <md-list-item>
-            <md-icon>send</md-icon>
-            <span class="md-list-item-text">Sent Mail</span>
+            <md-icon>home</md-icon>
+            <span class="md-list-item-text">
+              <router-link to="/">Home</router-link>
+            </span>
           </md-list-item>
 
           <md-list-item>

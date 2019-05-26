@@ -15,9 +15,9 @@ class UserService {
         return axios.post(`${this.url}/create-user`,user)
     }
 
-    getUserByName(user){
+    getUserByName(username){
         axios.defaults.headers.common['x-access-token'] = localStorage.getItem('jwtToken')
-        return axios.get(`${this.url}/api/v1/user/me/${user.username}`)
+        return axios.get(`${this.url}/api/v1/user/me/${username}`)
     }
 
 

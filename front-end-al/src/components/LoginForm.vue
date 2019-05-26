@@ -48,7 +48,7 @@ export default {
       if(username == "" || email == "" || password == ""){
         this.$router.go();
       }else{
-        const obj = {username,email, password}
+        const obj = {username: username.trim(),email, password}
 
         if(this.isLoginScreen){
           this.login(obj)
@@ -61,12 +61,12 @@ export default {
     login(user){
       userService.loginUser(user)
         .then(resp => {
-          console.log(resp.data)
-          localStorage.setItem('')
+          localStorage.setItem('jwtToken',resp.data.token)
+          this.$router.push({name:'user-details',params:{username: user.username}})
         })
         .catch(err => {
           console.log(`Deu erro: ${err}`)
-          alert("Erro");
+          alert("Erro na autenticação");
           this.$router.go();
         })
     },

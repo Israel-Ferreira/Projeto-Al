@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import Home from './views/Home.vue'
 import Auth from './views/Auth.vue'
 import SignUp from './views/SignUp.vue'
+import  User from './views/User.vue'
 
 Vue.use(Router)
 
@@ -30,7 +31,21 @@ export default new Router({
       path: '/signup',
       name: 'signup',
       component: SignUp
+    },
+    {
+      path: '/user-details/:username',
+      name: 'user-details',
+      beforeEnter: (to,from,next) => {
+        const token = localStorage.getItem('jwtToken')
+        if(!token){
+          next('/auth')
+        }else{
+          next()
+        }
+      },
+      component: User
     }
+
     
   ]
 })
