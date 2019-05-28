@@ -7,8 +7,7 @@ const userRouter = Router()
 // middleware que faz a segurança dessas rotas
 userRouter.use((req, res, next) => {
 	console.log("passou por aqui");
-	const token =
-		req.body.token || req.query.token || req.headers["x-access-token"];
+	const token =  req.body.token || req.query.token || req.headers["x-access-token"];
 	if (token) {
 		jwt.verify(token, '123456', (err, decoded) => {
 			if (err) {
@@ -44,6 +43,18 @@ userRouter.get('/me/:username', async (req,res,next) => {
     return res.json({user})
 })
 
+
+userRouter.put('/me/:id/edit', (req,res,next) => {
+	const { id } = req.params;
+	const obj = req.body;
+
+	if(obj.address && obj.phone){
+		User.findByIdAndUpdate(id,obj)
+			.then(resp => res.json({success: true, response: resp}))
+			.catch(err => res.status(400).json({success: false, message: err}))
+	}
+
+})
 
 
 module.exports = userRouter
