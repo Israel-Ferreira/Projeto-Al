@@ -16,12 +16,19 @@ class UserService {
     }
 
     getUserByName(username){
-        axios.defaults.headers.common['x-access-token'] = localStorage.getItem('jwtToken')
+        this._configToken();
         return axios.get(`${this.url}/api/v1/user/me/${username}`)
     }
 
+    updateInformations(user){
+        axios.defaults.headers.common["x-access-token"] = localStorage.getItem("jwtToken");
+        return axios.put(`${this.url}/api/v1/user/me/${user.username}/edit`,user)
+    }
 
+    _configToken(){
+        axios.defaults.headers.common["x-access-token"] = localStorage.getItem("jwtToken");
+    }
 }
 
 
-export default UserService;
+export default new UserService("http://localhost:6590");

@@ -10,6 +10,7 @@ userRouter.use((req, res, next) => {
 	const token =  req.body.token || req.query.token || req.headers["x-access-token"];
 	if (token) {
 		jwt.verify(token, '123456', (err, decoded) => {
+			console.log(token)
 			if (err) {
 				return res.status(404).json({
 					success: false,
@@ -17,6 +18,7 @@ userRouter.use((req, res, next) => {
 				});
 			} else {
 				req.decoded = decoded;
+				console.log(req.decoded)
 				next();
 			}
 		});
@@ -44,14 +46,20 @@ userRouter.get('/me/:username', async (req,res,next) => {
 })
 
 
-userRouter.put('/me/:id/edit', (req,res,next) => {
-	const { id } = req.params;
+userRouter.put('/me/:username/edit', async (req,res,next) => {
+	const { username } = req.params;
 	const obj = req.body;
 
+	console.log(obj.address)
+
 	if(obj.address && obj.phone){
-		User.findByIdAndUpdate(id,obj)
-			.then(resp => res.json({success: true, response: resp}))
-			.catch(err => res.status(400).json({success: false, message: err}))
+		try{
+			const resp = await User.findOneAndUpdate({username},obj);
+			res.status(200).json({success: true, message: 'Update Sucessful'})
+		}catch(e){
+			res.status(400).json({success: false, message: e})
+		}
+		
 	}
 
 })

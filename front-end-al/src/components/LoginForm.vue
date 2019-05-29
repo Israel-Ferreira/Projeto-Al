@@ -29,9 +29,6 @@
 
 <script>
 import UserService from '../services/UserService'
-import VueRouter from 'vue-router'
-
-const userService = new UserService('http://localhost:6590');
 
 
 export default {
@@ -58,31 +55,27 @@ export default {
       }
     },
 
-    login(user){
-      userService.loginUser(user)
-        .then(resp => {
-          localStorage.setItem('jwtToken',resp.data.token)
-          this.$router.push({name:'user-details',params:{username: user.username}})
-        })
-        .catch(err => {
-          console.log(`Deu erro: ${err}`)
-          alert("Erro na autenticação");
-          this.$router.go();
-        })
+    async login(user){
+      try{
+        const resp =  await UserService.loginUser(user)
+        localStorage.setItem('jwtToken',resp.data.token)
+        this.$router.push({name:'user-details',params:{username: user.username}})
+      }catch(e){
+        alert("Erro na autenticação ", e);
+        this.$router.go();
+      }
     },
 
-    signUp(user){
-      userService.createUser(user)
-        .then(resp => {
-          console.log(resp)
-          this.$router.push('auth')
-          alert('Conta Criada com sucesso')
-        })
-        .catch(err => {
-          console.log(err)
-          this.$router.go()
-        })
-    }
+    async signUp(user){
+      try{
+        const resp =  await UserService.createUser(user);
+        
+        if(resp.status == 201) this.$router.push('auth')
+        alert('Conta Criada com sucesso')
+      }catch{
+        this.$router.go()
+      }
+    },
   },
   computed: {
     componentTitle() {
