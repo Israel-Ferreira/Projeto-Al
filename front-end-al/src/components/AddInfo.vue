@@ -29,7 +29,7 @@
     </div>
 </template>
 <style scoped lang="scss">
-.text-white{
+.router-link{
     color: #FFF;
 
 }

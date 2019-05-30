@@ -27,7 +27,15 @@ export default new Router({
 		{
 			path: "/auth",
 			name: "auth",
-			component: Auth
+			component: Auth,
+			beforeEnter: (to, from, next) => {
+				const token = localStorage.getItem("jwtToken");
+				if (token) {
+					next("user-details");
+				} else {
+					next();
+				}
+			},
 		},
 		{
 			path: "/signup",
