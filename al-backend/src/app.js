@@ -34,7 +34,7 @@ app.use(function(req, res, next) {
 	next();
 }); 
 
-mongoose.connect(config.databaseDev,{useNewUrlParser: true})
+mongoose.connect(config.database,{useNewUrlParser: true})
 
 app.use('/authenticate',authUserRouter)
 app.use('/create-user',createUserRouter)
