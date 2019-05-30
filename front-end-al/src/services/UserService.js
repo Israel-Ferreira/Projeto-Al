@@ -21,7 +21,7 @@ class UserService {
     }
 
     updateInformations(user){
-        axios.defaults.headers.common["x-access-token"] = localStorage.getItem("jwtToken");
+        this._configToken()
         return axios.put(`${this.url}/api/v1/user/me/${user.username}/edit`,user)
     }
 

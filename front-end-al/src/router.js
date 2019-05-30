@@ -5,8 +5,18 @@ import Auth from "./views/Auth.vue";
 import SignUp from "./views/SignUp.vue";
 import User from "./views/User.vue";
 import UserInfo from "./views/UserInfo.vue";
+import UserEdit from './views/UserEdit.vue';
 
 Vue.use(Router);
+
+const checkToken = (to, from, next) => {
+	const token = localStorage.getItem("jwtToken");
+	if (!token) {
+		next("/auth");
+	} else {
+		next();
+	}
+}
 
 export default new Router({
 	routes: [
@@ -28,14 +38,6 @@ export default new Router({
 			path: "/auth",
 			name: "auth",
 			component: Auth,
-			beforeEnter: (to, from, next) => {
-				const token = localStorage.getItem("jwtToken");
-				if (token) {
-					next("user-details");
-				} else {
-					next();
-				}
-			},
 		},
 		{
 			path: "/signup",
@@ -45,28 +47,20 @@ export default new Router({
 		{
 			path: "/user-details/:username",
 			name: "user-details",
-			beforeEnter: (to, from, next) => {
-				const token = localStorage.getItem("jwtToken");
-				if (!token) {
-					next("/auth");
-				} else {
-					next();
-				}
-			},
+			beforeEnter: checkToken,
 			component: User
 		},
 		{
 			path: "/user-details/:username/edit",
 			name: "user-details-edit",
-			beforeEnter: (to, from, next) => {
-				const token = localStorage.getItem("jwtToken");
-				if (!token) {
-					next("/auth");
-				} else {
-					next();
-				}
-			},
+			beforeEnter: checkToken,
 			component: UserInfo
+		}, 
+		{
+			path: "/user/:username/edit",
+			name: 'user-edit',
+			beforeEnter: checkToken,
+			component: UserEdit
 		}
 	]
 });

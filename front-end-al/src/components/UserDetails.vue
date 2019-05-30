@@ -11,16 +11,19 @@
       </md-field>
       <md-field v-if="user.phone">
         <label>Telefone</label>
-        <md-input v-model="user.phone"></md-input>
+        <md-input v-model="user.phone" readonly></md-input>
       </md-field>
       <md-field v-if="user.address">
         <label>Endereço</label>
-        <md-input v-model="user.address"></md-input>
+        <md-input v-model="user.address" readonly></md-input>
       </md-field>
       <md-list class="md-double-line">
         <md-list-item>
           <md-button @click="logOut" class="md-raised md-primary">Sair</md-button>
-          <md-button @click="addMoreInfo" class="md-raised md-accent">Adicionar Mais Informações</md-button>
+          <md-button v-if="!user.phone && !user.address"  @click="addMoreInfo" class="md-raised md-accent">Adicionar Mais Informações</md-button>
+          <md-button v-else  class="md-raised md-accent">
+            <router-link :to="`/user/${username}/edit`">Editar Usuário</router-link>
+          </md-button>
         </md-list-item>
       </md-list>
     </div>
@@ -59,7 +62,7 @@ export default {
         name: "user-details-edit",
         params: { username: username }
       });
-    }
+    },
   },
 
   mounted() {

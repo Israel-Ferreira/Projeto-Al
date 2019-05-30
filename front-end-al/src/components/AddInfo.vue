@@ -1,18 +1,7 @@
 <template>
     <div class="add-info">
+        <h3 class="md-title">Adicionar Informações</h3>
         <form class="md-layout" @submit.prevent="submitAddInfoForm" >
-            <md-field>
-                <label>Usuário</label>
-                <md-input readonly  v-model="user.username"></md-input>
-            </md-field>
-            <md-field>
-                <label>Email</label>
-                <md-input  readonly v-model="user.email" type="email"></md-input>
-            </md-field>
-            <md-field>
-                <label>Senha</label>
-                <md-input type="password" v-model="user.password"></md-input>
-            </md-field>
             <md-field>
                 <label>Telefone</label>
                 <md-input v-model="phone"></md-input>
@@ -58,6 +47,7 @@ export default {
 
             try{
                 const resp = await UserService.updateInformations(user)
+                console.log(resp)
                 this.$router.push({name:"user-details", params:{username:user.username}})
             }catch(err){
                 alert("Falha na operação")
@@ -70,7 +60,8 @@ export default {
                 const resp = await UserService.getUserByName(this.username);
                 this.user = resp.data.user;
             }catch(err) {
-                this.$router.push("user-details")
+                localStorage.removeItem('jwtToken')
+                this.$router.push("auth")
             }
         }
     },
