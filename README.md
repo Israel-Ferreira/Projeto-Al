@@ -6,7 +6,7 @@ Projeto para concorrer a uma vaga de estágio na Automalógica
 
 ### Iniciando o Backend
 
-Mude para a pasta onde está o backend, com nome de `al-backend`
+Mude para a pasta onde está o backend, usando este comando: 
 `cd al-backend`
 
 Depois, instale as dependências com o seguinte comando:
